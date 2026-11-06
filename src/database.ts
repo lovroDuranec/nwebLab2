@@ -7,7 +7,7 @@ if (!process.env.DB_URL) {
     throw new Error('nije dobar url');
 }
 export const pool = new Pool({
-    connectionString: procces.env.DB_URL,
+    connectionString: process.env.DB_URL,
     port: 5432,
     ssl: {rejectUnauthorized: false}
 })
