@@ -1,0 +1,29 @@
+html 
+    head 
+        title nweb Lab2 - SQL injection
+
+
+        h1 SQL injection
+        hr
+        h3 a(href='/2', title='Bad Auth') Task 2 - Bad Authentication
+        hr
+
+
+        if Username:
+            h2 Welcome #{username}
+
+            h3 Your location: #{location}
+            h3 Your information: #{information}
+
+        else
+            form(action="/login" method="POST")
+            label(for="username") Username:
+            input(type="text" name="username" id="username" required)
+            br
+            br
+            label(for="Password") Password:
+            input(type="password" name="username" id="username" required)
+            br
+            br
+            button(type="submit") Login
+        
