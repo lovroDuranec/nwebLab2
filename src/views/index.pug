@@ -9,7 +9,7 @@ html
         hr
 
 
-        if Username:
+        if username
             h2 Welcome #{username}
 
             h3 Your location: #{location}
@@ -17,13 +17,13 @@ html
 
         else
             form(action="/login" method="POST")
-            label(for="username") Username:
-            input(type="text" name="username" id="username" required)
-            br
-            br
-            label(for="Password") Password:
-            input(type="password" name="username" id="username" required)
-            br
-            br
-            button(type="submit") Login
+                label(for="username") Username:
+                input(type="text" name="username" id="username" required)
+                br
+                br
+                label(for="Password") Password:
+                input(type="password" name="password" id="password" required)
+                br
+                br
+                button(type="submit") Login
         

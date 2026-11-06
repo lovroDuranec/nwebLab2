@@ -26,6 +26,8 @@ const hostname = externalUrl ? '0.0.0.0': '127.0.0.1'; // must match the callbac
 
 app.get('/', async function (req, res) {
   let username : string | undefined;
+  let location : string | undefined;
+  let information : string | undefined;
 
   res.render('index', {username});
   console.log("/ radi");
@@ -33,6 +35,8 @@ app.get('/', async function (req, res) {
 
 app.get('/2', async function (req, res) {
   let username : string | undefined;
+  let location : string | undefined;
+  let information : string | undefined;
 
   res.render('index2', {username});
   console.log("/2 radi");
