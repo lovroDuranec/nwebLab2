@@ -3,8 +3,8 @@
   "scripts": {
     "build": "npm run clean && tsc -p tsconfig.json && npm run copy-views",
     "clean": "shx rm -rf dist",
-    "copy-views": "shx cp -r src/views dist/task1",
-    "start": "node dist/task1/main.js"
+    "copy-views": "shx cp -r src/views dist",
+    "start": "node dist/main.js"
   },
   "dependencies": {
     "dotenv": "^18.0.9",
