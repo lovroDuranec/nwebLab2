@@ -24,8 +24,29 @@ const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/', async function (req, res) {
-  res.render('index');
+  res.render('index', {sqlVul : SQL_VUL});
 });
+
+
+app.get("/place", async (req, res) => {
+  if (SQL_VUL){
+    const location = req.query.location as string;
+    const query = `SELECT * FROM lab2_accounts WHERE place = '${location}'`;
+    const result = await pool.query(query);  
+  }
+  else{
+    const location = req.query.location;
+    const result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);  
+  }
+  res.render('index', {data : result.rows});
+});
+
+app.post("/sql_change", (req, res) => {
+  SQL_VUL = !SQL_VUL;
+  res.redirect("/");
+});
+
+
 
 app.get('/2', async function (req, res) {
   if (currentUser){
@@ -33,16 +54,6 @@ app.get('/2', async function (req, res) {
   }
   else {res.render('index2');}
 });
-
-
-app.get("/place", async (req, res) => {
-  const location = req.query.location as string;
-  const query = `SELECT * FROM lab2_accounts WHERE place = '${location}'`;
-  const result = await pool.query(query);
-  res.render('index', {data : result.rows});
-});
-
-
 
 app.post("/login", async (req, res) => {
   const username = req.body.username;

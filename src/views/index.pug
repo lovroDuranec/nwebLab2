@@ -9,10 +9,18 @@ html
             a(href='/2' title='Bad Auth') Task 2 - Bad Authentication
         
         hr
+        if SQL_VUL
+            h2 Page is vulnerable
+        else
+            h2 Page is not vulnerable
 
+        form(action"/change_sql" method="POST")
+            button(type="submit") Toggle vulnerability
 
+        hr
 
         h2 Enter name of place to show all the people living there (example: Zagreb)
+        h2 nepoznato_ime' OR '1'='1
 
         form(action="/place", method="get")
             input(type="text", name="location")
