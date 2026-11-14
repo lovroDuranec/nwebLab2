@@ -57,6 +57,10 @@ app.get("/makeNew/:username/:password/:place/:information", async (req,res) => {
   await createUser(username, password, place, information);
   res.send("added successfully");
 });
+app.post("/logout", (req, res) =>{
+  currentUser = undefined;
+  res.redirect("/2");
+})
 
 app.listen(port, hostname, () => {
   console.log(`Server locally running at http://${hostname}:${port}`)

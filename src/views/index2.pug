@@ -24,6 +24,9 @@ html
             h3 Your location: #{location}
             h3 Your information: #{information}
 
+            form(action="/logout" method="POST")
+                button(type="submit") Logout
+
         else
             form(action="/login" method="POST")
                 label(for="username") Username:
