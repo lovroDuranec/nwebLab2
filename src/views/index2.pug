@@ -32,6 +32,9 @@ html
                 button(type="submit") Logout
 
         else
+            if custom_error
+                p #{custom_error}
+            
             form(action="/login" method="POST")
                 label(for="username") Username:
                 input(type="text" name="username" id="username" required)

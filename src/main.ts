@@ -69,9 +69,9 @@ app.post("/login", async (req, res) => {
   if (!user){
     const hasUsername = await checkForUsername(username);
     if (!hasUsername){
-      return res.status(401).send("Ne postoji korisnicko ime");
+      return res.render("index2", {baVul : BA_VUL, custom_error : "Ne postoji korisnicko ime"});
     }
-    return res.status(401).send("Password nije dobar");
+    return res.render("index2", {baVul : BA_VUL, custom_error : "Lozinka nije dobra"});
   }
   currentUser = user;
   res.redirect("/2");
