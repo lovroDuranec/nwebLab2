@@ -17,7 +17,7 @@ app.set('view engine', 'pug');
 app.use(express.json());
 console.log("views path: ", path.join(import.meta.dirname, "views"));
 let currentUser: {username: string; information: string; location:string} | undefined;
-
+let SQL_VUL = true;
 const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
 
 
@@ -34,12 +34,13 @@ app.get('/2', async function (req, res) {
   else {res.render('index2');}
 });
 
+
 app.get("/place", async (req, res) => {
-  const location = req.query.location;
-  const result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);
+  const location = req.query.location as string;
+  const query = `SELECT * FROM lab2_accounts WHERE place = '${location}'`;
+  const result = await pool.query(query);
   res.render('index', {data : result.rows});
 });
-
 
 
 
