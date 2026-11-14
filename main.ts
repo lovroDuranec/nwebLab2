@@ -51,10 +51,10 @@ app.post("/login", async (req, res) => {
   res.redirect("/2");
 });
 
-app.get("/makeNew/:1/:2/:3/:4", async (req,res) => {
+app.get("/makeNew/:username/:password/:place/:information", async (req,res) => {
   const { username, password, place, information } = req.params;
   await createUser(username, password, place, information);
-  res.send("added ${username} successfully");
+  res.send(added successfully);
 });
 
 app.listen(port, hostname, () => {
