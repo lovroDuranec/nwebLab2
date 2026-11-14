@@ -29,14 +29,15 @@ app.get('/', async function (req, res) {
 
 
 app.get("/place", async (req, res) => {
+  let result;
   if (SQL_VUL){
     const location = req.query.location as string;
     const query = `SELECT * FROM lab2_accounts WHERE place = '${location}'`;
-    const result = await pool.query(query);  
+    result = await pool.query(query);  
   }
   else{
     const location = req.query.location;
-    const result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);  
+    result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);  
   }
   res.render('index', {data : result.rows});
 });
