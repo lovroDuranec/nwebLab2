@@ -5,7 +5,16 @@ html
 
         h1 Bad Authentication
         hr
-        h3 a(href='/', title='SQL inj') Task 1 - SQL injection
+        h2
+            a(href='/' title='SQL inj') Task 1 - SQL injection
+        hr
+
+        h2
+            form(action="temp" method="POST")
+                label(for="sql_inj") SQL Injection Vulnerability:
+                input(type="checkbox" id="sql_inj" name="sql_inj" value="1" onchange="this.form.submit()" checked=sql_inj ==="1")
+
+
         hr
 
 

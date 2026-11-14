@@ -1,10 +1,7 @@
 import express from 'express';
 import path from 'path'
-import oidc from 'express-openid-connect';
-import QRCode from 'qrcode';
-const { auth, requiresAuth } = oidc;
 import 'dotenv/config';
-import { initializeDatabase, getInformationBasedOnUsernameAndPassword, createUser } from './database.js';
+import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool} from './database.js';
 await initializeDatabase();
 
 
@@ -18,35 +15,40 @@ app.set("views", path.join(import.meta.dirname, "views"));
 app.set('view engine', 'pug');
 app.use(express.json());
 console.log("views path: ", path.join(import.meta.dirname, "views"));
+let currentUser: {username: string; information: string; location:string} | undefined;
 
-const hostname = externalUrl ? '0.0.0.0': '127.0.0.1'; // must match the callback URL registered in Auth0
+const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/', async function (req, res) {
-  let username : string | undefined;
-  let location : string | undefined;
-  let information : string | undefined;
-
-  res.render('index', {username});
-  console.log("/ radi");
+  res.render('index');
 });
 
 app.get('/2', async function (req, res) {
-  let username : string | undefined;
-  let location : string | undefined;
-  let information : string | undefined;
+  if (currentUser){
+    res.render('index2', {username:currentUser.username, information:currentUser.information, location:currentUser.location});  
+  }
+  else {res.render('index2');}
+});
 
-  res.render('index2', {username});
-  console.log("/2 radi");
+app.get("/place", async (req, res) => {
+  const location = req.query.location;
+  const result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);
+  res.render('index', {data : result.rows});
 });
 
 
-app.post("/login", (req, res) => {
+
+
+app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
+  const user = await getInformationBasedOnUsernameAndPassword(username, password);
+  if (!user) return res.status(401).send("krivi podaci");
+  currentUser = user;
+  res.redirect("/2");
 });
 
 

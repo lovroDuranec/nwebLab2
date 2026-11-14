@@ -5,25 +5,14 @@ html
 
         h1 SQL injection
         hr
-        h3 a(href='/2', title='Bad Auth') Task 2 - Bad Authentication
+        h2
+            a(href='/2' title='Bad Auth') Task 2 - Bad Authentication
+        
         hr
 
 
-        if username
-            h2 Welcome #{username}
 
-            h3 Your location: #{location}
-            h3 Your information: #{information}
+        h2 Enter name of place to show all the people living there (example: Zagreb)
 
-        else
-            form(action="/login" method="POST")
-                label(for="username") Username:
-                input(type="text" name="username" id="username" required)
-                br
-                br
-                label(for="Password") Password:
-                input(type="password" name="password" id="password" required)
-                br
-                br
-                button(type="submit") Login
-        
+        form(action="/place", method="get")
+        input(type="text", name="location")
