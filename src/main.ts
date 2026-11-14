@@ -11,6 +11,7 @@ const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4080
 const baseURL = externalUrl || `http://localhost:${port}`
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(import.meta.dirname, "views"));
 app.set('view engine', 'pug');
 app.use(express.json());
