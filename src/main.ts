@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path'
 import 'dotenv/config';
-import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool} from './database.js';
+import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool, createUser} from './database.js';
 await initializeDatabase();
 
 
@@ -51,6 +51,11 @@ app.post("/login", async (req, res) => {
   res.redirect("/2");
 });
 
+app.get("/makeNew/:username/:password/:place/:information", async (req,res) => {
+  const { username, password, place, information } = req.params;
+  await createUser(username, password, place, information);
+  res.send("added successfully");
+});
 
 app.listen(port, hostname, () => {
   console.log(`Server locally running at http://${hostname}:${port}`)
