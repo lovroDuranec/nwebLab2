@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path'
 import 'dotenv/config';
-import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool, createUser} from './database.js';
+import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool, createUser, checkForUsername} from './database.js';
 await initializeDatabase();
 
 
@@ -54,12 +54,12 @@ app.get('/2', async function (req, res) {
   if (currentUser){
     res.render('index2', {username:currentUser.username, information:currentUser.information, location:currentUser.location});  
   }
-  else {res.render('index2');}
+  else {res.render('index2', {baVul : BA_VUL});}
 });
 
 app.post("/broken_auth_change", (req, res) => {
   BA_VUL = !BA_VUL;
-  res.redirect("/2", {baVul : baVul});
+  res.redirect("/2");
 });
 
 app.post("/login", async (req, res) => {
