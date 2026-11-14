@@ -16,18 +16,18 @@ html
 
         form(action="/place", method="get")
         input(type="text", name="location")
-
-        table 
-            thead
-                tr
-                    th ID
-                    th Korisnik
-                    th Informacije
-                    th Mjesto
-                tbody
-                    each x in data
-                        tr
-                            td= x.id
-                            td= x.username
-                            td= x.information
-                            td= x.place
+        if data
+            table 
+                thead
+                    tr
+                        th ID
+                        th Korisnik
+                        th Informacije
+                        th Mjesto
+                    tbody
+                        each x in data
+                            tr
+                                td= x.id
+                                td= x.username
+                                td= x.information
+                                td= x.place
