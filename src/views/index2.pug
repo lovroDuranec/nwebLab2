@@ -8,11 +8,15 @@ html
         h2
             a(href='/' title='SQL inj') Task 1 - SQL injection
         hr
+        if BA_VUL === true
+            h2 Page is vulnerable
+        else
+            h2 Page is not vulnerable
 
         h2
-            form(action="temp" method="POST")
-                label(for="sql_inj") Bad Authentification Vulnerability:
-                input(type="checkbox" id="sql_inj" name="sql_inj" value="1" onchange="this.form.submit()" checked=sql_inj ==="1")
+
+            form(action="/broken_auth_change" method="POST")
+            button(type="submit") Toggle vulnerability
 
 
         hr

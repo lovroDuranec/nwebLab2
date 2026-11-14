@@ -43,3 +43,13 @@ export async function createUser(username: string, password: string, location: s
     [username, password, information, location]);
     return "uspjesan unos";
 }
+
+export async function checkForUsername(username: string){
+    const result = await pool.query(`
+        SELECT * FROM lab2_accounts WHERE username = $1
+    `, [username]);
+    if (result.rowCount > 0){
+        return true
+    }
+    return false
+}

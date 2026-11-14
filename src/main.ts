@@ -18,6 +18,7 @@ app.use(express.json());
 console.log("views path: ", path.join(import.meta.dirname, "views"));
 let currentUser: {username: string; information: string; location:string} | undefined;
 let SQL_VUL = true;
+let BA_VUL = true;
 const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
 
 
@@ -56,11 +57,22 @@ app.get('/2', async function (req, res) {
   else {res.render('index2');}
 });
 
+app.post("/broken_auth_change", (req, res) => {
+  BA_VUL = !BA_VUL;
+  res.redirect("/2", {baVul : baVul});
+});
+
 app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const user = await getInformationBasedOnUsernameAndPassword(username, password);
-  if (!user) return res.status(401).send("krivi podaci");
+  if (!user){
+    const hasUsername = await checkForUsername(username);
+    if (!hasUsername){
+      return res.status(401).send("Ne postoji korisnicko ime");
+    }
+    return res.status(401).send("Password nije dobar");
+  }
   currentUser = user;
   res.redirect("/2");
 });
