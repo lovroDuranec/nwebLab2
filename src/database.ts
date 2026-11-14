@@ -48,8 +48,8 @@ export async function checkForUsername(username: string){
     const result = await pool.query(`
         SELECT * FROM lab2_accounts WHERE username = $1
     `, [username]);
-    if (result.rowCount ?? 0) > 0{
-        return true
+    if ((result.rowCount ?? 0) > 0){
+        return true;
     }
-    return false
+    return false;
 }
