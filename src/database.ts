@@ -36,14 +36,6 @@ export async function getInformationBasedOnUsernameAndPassword(username: string,
     return result.rows[0];
 }
 
-export async function createUser(username: string, password: string, location: string, information: string){
-    const result = await pool.query(`
-        INSERT INTO lab2_accounts (username, password, information, place) VALUES ($1, $2, $3, $4)
-    `,
-    [username, password, information, location]);
-    return "uspjesan unos";
-}
-
 export async function checkForUsername(username: string){
     const result = await pool.query(`
         SELECT * FROM lab2_accounts WHERE username = $1

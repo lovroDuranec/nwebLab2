@@ -21,7 +21,7 @@ let currentUser: {username: string; information: string; location:string} | unde
 let SQL_VUL = true;
 let BA_VUL = true;
 const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
-const loginTracker = [];
+const loginTracker : number[] = [];
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
