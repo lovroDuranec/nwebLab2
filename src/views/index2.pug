@@ -1,14 +1,14 @@
 html 
     head 
-        title nweb Lab2 - Bad Authentication
+        title nweb Lab2 - Broken Authentication
 
 
-        h1 Task 2 - Bad Authentication
+        h1 Task 2 - Broken Authentication
         hr
         h2
             a(href='/' title='SQL inj') Task 1 - SQL injection
         hr
-        if BA_VUL === true
+        if baVul === true
             h2 Page is vulnerable
         else
             h2 Page is not vulnerable
@@ -21,6 +21,9 @@ html
 
         hr
 
+        h2 Unesite Ime i lozinku korisnika za prikazas vasih podataka (npr. ime=Lovro, lozinka=lovric)
+        h2 Kad je ranjivost ukljucena ispisuju se predetaljne poruke (korisnik ne postoji, lozinka je kriva) i nema limita koliko puta se netko moze pokusati prijaviti.
+        h2 Kad je ranjivost iskljucena, daje se jedna genericna poruka da prijava nije uspijela i postoji limit od 5 pokusaja logina u minuti.
 
         if username
             h2 Welcome #{username}
@@ -34,7 +37,7 @@ html
         else
             if custom_error
                 p #{custom_error}
-            
+
             form(action="/login" method="POST")
                 label(for="username") Username:
                 input(type="text" name="username" id="username" required)

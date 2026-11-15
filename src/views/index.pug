@@ -6,10 +6,10 @@ html
         h1 Task 1 - SQL injection
         hr
         h2
-            a(href='/2' title='Bad Auth') Task 2 - Bad Authentication
+            a(href='/2' title='Bad Auth') Task 2 - Broken Authentication
         
         hr
-        if SQL_VUL === true
+        if sqlVul === true
             h2 Page is vulnerable
         else
             h2 Page is not vulnerable
@@ -20,7 +20,7 @@ html
         hr
 
         h2 Enter name of place to show all the people living there (example: Zagreb)
-        h2 Tautologija: nepoznato_ime' OR '1'='1
+        h2 Upute: Tipicni primjer sql ubacivanja (tautologije): nepoznato_ime' OR '1'='1 -> ovo ce ispisati cijelu tablicu kad je ranjivost ukljucena, a nece ispisati nista od podataka kad je iskljucena.
 
         form(action="/place", method="get")
             input(type="text", name="location")

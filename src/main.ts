@@ -40,7 +40,7 @@ app.get("/place", async (req, res) => {
     const location = req.query.location;
     result = await pool.query('SELECT * FROM lab2_accounts where place = $1', [location]);  
   }
-  res.render('index', {data : result.rows});
+  res.render('index', {data : result.rows, sqlVul : SQL_VUL});
 });
 
 app.post("/sql_change", (req, res) => {
@@ -66,22 +66,27 @@ app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const user = await getInformationBasedOnUsernameAndPassword(username, password);
-  if (!user){
-    const hasUsername = await checkForUsername(username);
-    if (!hasUsername){
-      return res.render("index2", {baVul : BA_VUL, custom_error : "Ne postoji korisnicko ime"});
+  if (BA_VUL){
+    if (!user){
+      const hasUsername = await checkForUsername(username);
+      if (!hasUsername){
+        return res.render("index2", {baVul : BA_VUL, custom_error : "Ne postoji korisnicko ime"});
+      }
+      return res.render("index2", {baVul : BA_VUL, custom_error : "Lozinka nije dobra"});
     }
-    return res.render("index2", {baVul : BA_VUL, custom_error : "Lozinka nije dobra"});
+    currentUser = {username: user.username, information: user.information, location: user.place};
+    res.redirect("/2");
   }
-  currentUser = user;
-  res.redirect("/2");
+  else{
+    if (!user){
+      return res.render("index2", {baVul : BA_VUL, custom_error : "Prijava nije uspijela"})
+    }
+    currentUser = {username: user.username, information: user.information, location: user.place};
+    res.redirect("/2");
+  }
+  
 });
 
-app.get("/makeNew/:username/:password/:place/:information", async (req,res) => {
-  const { username, password, place, information } = req.params;
-  await createUser(username, password, place, information);
-  res.send("added successfully");
-});
 app.post("/logout", (req, res) =>{
   currentUser = undefined;
   res.redirect("/2");
