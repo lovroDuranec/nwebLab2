@@ -16,6 +16,7 @@ app.set("views", path.join(import.meta.dirname, "views"));
 app.set('view engine', 'pug');
 app.use(express.json());
 console.log("views path: ", path.join(import.meta.dirname, "views"));
+
 let currentUser: {username: string; information: string; location:string} | undefined;
 let SQL_VUL = true;
 let BA_VUL = true;
