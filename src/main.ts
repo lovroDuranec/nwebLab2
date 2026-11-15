@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path'
 import 'dotenv/config';
-import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool, createUser, checkForUsername} from './database.js';
+import { initializeDatabase, getInformationBasedOnUsernameAndPassword, pool, checkForUsername} from './database.js';
 await initializeDatabase();
 
 
