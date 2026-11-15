@@ -21,7 +21,7 @@ let currentUser: {username: string; information: string; location:string} | unde
 let SQL_VUL = true;
 let BA_VUL = true;
 const hostname = externalUrl ? '0.0.0.0': '127.0.0.1';
-
+const loginTracker = [];
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -79,8 +79,11 @@ app.post("/login", async (req, res) => {
     res.redirect("/2");
   }
   else{
+    if (checkList()){
+      return res.render("index2", {baVul : BA_VUL, custom_error : "Timeout - previse pokusaja prijave u zanjih 60 sekundi."});
+    }
     if (!user){
-      return res.render("index2", {baVul : BA_VUL, custom_error : "Prijava nije uspijela"})
+      return res.render("index2", {baVul : BA_VUL, custom_error : "Prijava nije uspijela"});
     }
     currentUser = {username: user.username, information: user.information, location: user.place};
     res.redirect("/2");
@@ -92,6 +95,19 @@ app.post("/logout", (req, res) =>{
   currentUser = undefined;
   res.redirect("/2");
 })
+
+function checkList(){
+  const now = Date.now();
+  const oneMinBack = now - 60_000;
+  while (loginTracker.length > 0 && loginTracker[0] < oneMinBack){
+    loginTracker.shift();
+  }
+  if (loginTracker.length >5){
+    return true;
+  }
+  loginTracker.push(now);
+  return false;
+}
 
 app.listen(port, hostname, () => {
   console.log(`Server locally running at http://${hostname}:${port}`)
